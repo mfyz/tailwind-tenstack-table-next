@@ -21,6 +21,7 @@ export default function ({ data, columns }) {
 	const table = useReactTable({
 		data,
 		columns,
+		columnResizeMode: 'onChange',
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 	})
@@ -42,7 +43,13 @@ export default function ({ data, columns }) {
 						{table.getHeaderGroups().map(headerGroup => (
 							<tr key={headerGroup.id} className="text-gray-600 text-left">
 							{headerGroup.headers.map(header => (
-								<th key={header.id} className="font-semibold text-sm uppercase p-2">
+								<th
+									key={header.id}
+									className="font-semibold text-sm uppercase p-2"
+									style={{
+										width: header.getSize(),
+									}}
+								>
 									{header.isPlaceholder
 										? null
 										: (
@@ -64,6 +71,18 @@ export default function ({ data, columns }) {
 												}[header.column.getIsSorted()] ?? null}
 											</div>
 										)}
+									<div
+										{...{
+											onMouseDown: header.getResizeHandler(),
+											onTouchStart: header.getResizeHandler(),
+											className: `resizer ${header.column.getIsResizing() ? 'isResizing' : ''}`,
+											// style: {
+											// 	transform: header.column.getIsResizing()
+											// 		? `translateX(${table.getState().columnSizingInfo.deltaOffset}px)`
+											// 		: '',
+											// },
+										}}
+									/>
 								</th>
 							))}
 							</tr>

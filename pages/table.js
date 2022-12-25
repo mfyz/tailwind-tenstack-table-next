@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { useState } from 'react'
-import { createColumnHelper } from '@tanstack/react-table'
 
 import { H1 } from '../components/headings'
 import Table from '../components/table'
@@ -34,30 +33,32 @@ const data = [
 	},
 ]
 
-const columnHelper = createColumnHelper()
-
 const columns = [
-	columnHelper.accessor('firstName', {
-		cell: info => info.getValue(),
-	}),
-	columnHelper.accessor(row => row.lastName, {
-		id: 'lastName',
+	{
+		accessorKey: 'firstName',
+	},
+	{
+		accessorKey: 'lastName',
 		cell: info => <i>{info.getValue()}</i>,
 		header: () => <span>Last Name</span>,
-	}),
-	columnHelper.accessor('age', {
+	},
+	{
+		accessorKey: 'age',
 		header: () => 'Age',
 		cell: info => info.renderValue(),
-	}),
-	columnHelper.accessor('visits', {
+	},
+	{
+		accessorKey: 'visits',
 		header: () => <span>Visits</span>,
-	}),
-	columnHelper.accessor('status', {
+	},
+	{
+		accessorKey: 'status',
 		header: 'Status',
-	}),
-	columnHelper.accessor('progress', {
-		header: 'Profile Progress',
-	}),
+	},
+	// {
+	// 	accessorKey: 'progress', 
+	// 	header: 'Profile Progress',
+	// },
 ]
 
 export default function ExampleTable() {
